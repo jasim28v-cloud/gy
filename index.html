@@ -3,101 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA PRIME | Ultra Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@600;900&display=swap" rel="stylesheet">
+    <title>LUMINA PRIME | لومينا برايم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --gold: #ffcf4b; 
             --accent: #00f2ff;
             --glass: rgba(255, 255, 255, 0.05);
-            --bg: #020406;
+            --bg: #030508;
         }
         
         body { 
-            background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; 
-            overflow-x: hidden;
+            background: var(--bg); 
+            background-image: radial-gradient(circle at 50% 50%, #0a111a 0%, #030508 100%);
+            color: #fff; 
+            font-family: 'Cairo', sans-serif; 
+            margin: 0; 
+            min-height: 100vh;
         }
 
+        /* Header Ultra Prime */
         header { 
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(30px); 
-            padding: 20px 8%; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--glass); position: sticky; top: 0; z-index: 1000; 
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(20px); 
+            padding: 20px 8%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid var(--glass); 
+            position: sticky; top: 0; z-index: 1000; 
         }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }
-        .logo span { color: var(--gold); }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
+        .logo span { color: var(--gold); text-shadow: 0 0 15px var(--gold); }
 
         .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
 
-        /* شريط المباريات */
-        .match-scroller { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 30px; scrollbar-width: none; }
+        /* تصفح المباريات الشفاف */
+        .match-scroller { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 25px; scrollbar-width: none; }
         .m-card { 
-            background: var(--glass); min-width: 200px; padding: 25px; border-radius: 25px; 
-            border: 1px solid rgba(255,255,255,0.1); text-align: center; backdrop-filter: blur(15px);
-            transition: 0.4s;
+            background: var(--glass); 
+            min-width: 220px; 
+            padding: 20px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            text-align: center; 
+            backdrop-filter: blur(10px);
+            transition: 0.5s ease;
         }
-        .m-score { color: var(--accent); font-family: 'Orbitron'; font-weight: 900; font-size: 22px; margin: 10px 0; display: block; }
+        .m-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(0, 242, 255, 0.05); }
+        .m-team { font-size: 14px; font-weight: 700; margin: 10px 0; }
+        .m-score { color: var(--accent); font-family: 'Orbitron'; font-weight: 900; font-size: 18px; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
 
-        /* شبكة الأخبار */
+        /* شبكة الأخبار ايلترا برايم */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
         .n-card { 
-            background: var(--glass); border-radius: 30px; overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.06); transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            backdrop-filter: blur(10px);
+            background: var(--glass); 
+            border-radius: 24px; 
+            overflow: hidden; 
+            border: 1px solid rgba(255,255,255,0.08); 
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
         }
-        .n-card:hover { border-color: var(--gold); transform: translateY(-10px); }
-        .n-img { position: relative; height: 220px; overflow: hidden; }
-        .n-img img { width: 100%; height: 100%; object-fit: cover; }
-        .n-badge { position: absolute; top: 20px; right: 20px; background: var(--gold); color: #000; font-size: 10px; font-weight: 900; padding: 6px 15px; border-radius: 12px; }
-        .n-info { padding: 25px; }
-        .n-info h3 { font-size: 19px; margin: 0 0 15px 0; line-height: 1.6; height: 60px; overflow: hidden; }
-        .n-more { color: var(--gold); font-weight: 900; }
-
-        /* تصميم النافذة المنبثقة (Popup) */
-        .popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; opacity: 0; visibility: hidden; transition: 0.5s;
-        }
-        .popup-content {
-            background: linear-gradient(135deg, #111, #000);
-            width: 90%; max-width: 450px; padding: 40px; border-radius: 35px;
-            text-align: center; border: 1px solid var(--gold);
-            transform: scale(0.8); transition: 0.5s;
-        }
-        .popup-overlay.active { opacity: 1; visibility: visible; }
-        .popup-overlay.active .popup-content { transform: scale(1); }
+        .n-card:hover { transform: scale(1.02); border-color: var(--gold); box-shadow: 0 15px 45px rgba(0,0,0,0.6); }
+        .n-card a { text-decoration: none; color: inherit; }
         
-        .popup-title { font-family: 'Orbitron'; font-size: 24px; color: var(--gold); margin-bottom: 15px; }
-        .popup-btn {
-            display: inline-block; padding: 15px 40px; background: var(--gold); color: #000;
-            text-decoration: none; border-radius: 50px; font-weight: 900; margin-top: 25px;
-            box-shadow: 0 10px 20px rgba(255, 207, 75, 0.3); transition: 0.3s;
+        .n-img { position: relative; height: 210px; }
+        .n-img img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
+        .n-badge { position: absolute; top: 15px; left: 15px; background: var(--gold); color: #000; font-size: 9px; font-weight: 900; padding: 5px 15px; border-radius: 50px; text-transform: uppercase; }
+        
+        .n-info { padding: 25px; }
+        .n-info h3 { font-size: 18px; margin: 0 0 15px 0; line-height: 1.6; font-weight: 700; height: 58px; overflow: hidden; }
+        .n-footer { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.5); border-top: 1px solid var(--glass); padding-top: 15px; }
+        .n-more { color: var(--gold); font-weight: 900; letter-spacing: 1px; }
+
+        /* إعلانات مدمجة */
+        .ad-slot { display: flex; justify-content: center; margin: 40px 0; }
+
+        footer { 
+            padding: 80px 20px; text-align: center; border-top: 1px solid var(--glass); 
+            background: linear-gradient(transparent, rgba(255, 207, 75, 0.05)); margin-top: 80px; 
         }
-        .popup-btn:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(255, 207, 75, 0.5); }
-        .close-popup { color: #555; cursor: pointer; margin-top: 15px; display: block; font-size: 12px; text-decoration: underline; }
+        .f-logo { font-family: 'Orbitron'; font-size: 28px; font-weight: 900; margin-bottom: 20px; }
 
-        /* حركات التمرير */
-        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: 0.8s; }
-        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
-
-        footer { padding: 60px 20px; text-align: center; background: #000; border-top: 1px solid var(--glass); margin-top: 100px; }
+        @media (max-width: 768px) {
+            .news-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 5%; }
+        }
     </style>
 </head>
 <body>
-
-    <div class="popup-overlay" id="adPopup">
-        <div class="popup-content">
-            <div class="popup-title">LUMINA PRIME <span>V2</span></div>
-            <p style="opacity: 0.8; line-height: 1.8;">استمتع بأحدث التغطيات الرياضية الحصرية والأخبار العاجلة عبر منصتنا المطورة.</p>
-            <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="popup-btn" onclick="closePopup()">دخول المنصة الآن</a>
-            <span class="close-popup" onclick="closePopup()">إغلاق ومتابعة القراءة</span>
-        </div>
-    </div>
-
     <header>
-        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" class="logo">LUMINA<span>PRIME</span></a>
-        <div style="color: var(--accent); font-family: 'Orbitron'; font-size: 11px; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 5px;">ULTRA V2</div>
+        <a href="#" class="logo">LUMINA<span>PRIME</span></a>
+        <div style="background: rgba(0, 242, 255, 0.1); color: var(--accent); padding: 5px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; border: 1px solid var(--accent);">ULTRA STREAM</div>
     </header>
 
     <div class="container">
@@ -105,262 +102,204 @@
             
         </div>
 
-        <h2 style="font-size: 28px; font-weight: 900; margin-bottom: 40px; border-right: 6px solid var(--gold); padding-right: 15px;">آخر التحديثات</h2>
+        <div class="ad-slot">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+        </div>
+
+        <h2 style="font-size: 26px; font-weight: 900; margin: 40px 0 30px; border-right: 5px solid var(--gold); padding-right: 15px;">آخر التغطيات <span style="color:var(--gold)">.</span></h2>
         
         <div class="news-grid">
             
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ada3ff4c59b702da655fd2.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>النجم السعودي سعود عبد الحميد يكتب التاريخ في الدوري الفرنسي</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad916b4c59b77f14053369.jpeg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>يوفنتوس يعود إلى سكة الانتصارات في الدوري الإيطالي برباعية أمام بيزا</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad85f44236046df617f609.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>4 غيابات مؤثرة وعودة غافي بدون تصريح طبي.. فليك يعلن قائمة برشلونة لمواجهة نيوكاسل</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad8226423604706b5da6dc.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>غوارديولا يكيل المديح لعمر مرموش ويحدد نقاط قوته وضعفه</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad7daa4c59b7795d2166c9.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>"ديربي الغضب" يخطف الأنظار في الجولة 28 من الدوري الإيطالي</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad6fb8423604706b5da6be.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>وفاة لاعب كرة القدم الكويتي فهد المجمد أثناء أداء واجبه العسكري</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad69d34c59b77d3326e47c.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>تشيلسي ينجو من فخ ريكسهام ويتأهل إلى ربع نهائي كأس الاتحاد الإنجليزي</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad63754236046e055f4180.png" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>زينيت يهدر ركلتي جزاء ويتكبد خسارة مفاجئة أمام أورنبورغ في الدوري الروسي</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad47614c59b7795d21668f.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>رسميا.. الأهلي يعلن تشخيص إصابة كريم فؤاد</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad45a94c59b77f3631d9a8.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>رد فعل هالاند بعد غيابه عن مباراة السيتي وتألق عمر مرموش أمام نيوكاسل (صورة)</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad3dcf4c59b77ce04224c3.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>ألميريا يحقق أول الأرباح من صفقة كريستيانو رونالدو</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="n-card animate-on-scroll">
+            <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
                         <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad23d04c59b77dd82a9999.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
+                        <div class="n-badge">ULTRA</div>
                     </div>
                     <div class="n-info">
                         <h3>رغم الفوز.. ما سبب إيقاف غوارديولا بعد مباراة مانشستر سيتي ونيوكاسل (فيديو)</h3>
                         <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card animate-on-scroll">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad0fe84236042cc00884ba.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
-                    </div>
-                    <div class="n-info">
-                        <h3>برقم مذهل.. لامين جمال يكتب التاريخ ويتفوق على كريستيانو رونالدو وميسي</h3>
-                        <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card animate-on-scroll">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad09b4423604303c44d1f4.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
-                    </div>
-                    <div class="n-info">
-                        <h3>بالفيديو.. ميسي يقود إنتر ميامي لتخطي دي سي يونايتد في الدوري الأمريكي</h3>
-                        <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card animate-on-scroll">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad001c4c59b77f140532cd.jpg" loading="lazy">
-                        <div class="n-badge">ULTRA PRIME</div>
-                    </div>
-                    <div class="n-info">
-                        <h3>رد فعل غوارديولا على تألق عمر مرموش أمام نيوكاسل (فيديو)</h3>
-                        <div class="n-footer">
-                            <span>🕒 17:14</span>
-                            <span class="n-more">المزيد</span>
+                            <span>08/03 - 17:19</span>
+                            <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
             </div>
         </div>
+
+        <div class="ad-slot">
+             <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
+        </div>
     </div>
 
     <footer>
-        <div style="font-family: 'Orbitron'; font-size: 22px; font-weight: 900;">LUMINA <span>2026</span></div>
+        <div class="f-logo">LUMINA <span>PRIME</span></div>
+        <p style="opacity: 0.6; font-size: 14px;">نظام رصد إخباري فائق الجودة - جميع الحقوق محفوظة 2026</p>
     </footer>
-
-    <script>
-        // إظهار النافذة المنبثقة بعد ثانيتين من الدخول
-        window.onload = function() {
-            setTimeout(() => {
-                document.getElementById('adPopup').classList.add('active');
-            }, 2000);
-        };
-
-        function closePopup() {
-            document.getElementById('adPopup').classList.remove('active');
-        }
-
-        // حركات التمرير
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-    </script>
 </body>
 </html>
