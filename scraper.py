@@ -2,94 +2,119 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-def run_trends_scraper():
-    # مصدر التريندات العالمية
-    trends_url = "https://trends.google.com/trending/rss?geo=US"
+def run_vortex_vogue():
+    # مصادر الموضة والجمال العالمية
+    fashion_url = "https://www.vogue.com/feed/rss"
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     
     try:
-        # الرابط الذكي المعتمد الذي أرسلته
-        smart_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+        # استخدام رابطك الإعلاني الذكي المحفوظ
+        smart_ad_url = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
         
-        # 1. جلب بيانات التريند
-        response = requests.get(trends_url, headers=headers, timeout=20)
+        response = requests.get(fashion_url, headers=headers, timeout=20)
         soup = BeautifulSoup(response.content, 'xml')
         items = soup.find_all('item')
         
-        trends_html = ""
-        for i, item in enumerate(items[:12]):
+        content_html = ""
+        for i, item in enumerate(items[:16]):
             title = item.title.text
-            traffic = item.find('ht:approx_traffic').text if item.find('ht:approx_traffic') else "+5K"
-            description = item.description.text if item.description else "موضوع رائج الآن عالمياً"
+            # جلب وصف مختصر وصورة
+            desc = item.description.text if item.description else "اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم."
+            img_tag = item.find('media:content') or item.find('enclosure')
+            img_url = img_tag.get('url') if img_tag else f"https://picsum.photos/seed/{i}/500/300"
             
-            trends_html += f'''
-            <div class="t-card">
-                <a href="{smart_ad_link}" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#{i+1}</span>
-                        <span class="t-traffic">{traffic} بحث</span>
+            content_html += f'''
+            <div class="f-card">
+                <a href="{smart_ad_url}" target="_blank">
+                    <div class="f-img">
+                        <img src="{img_url}" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
                         <h3>{title}</h3>
-                        <p>{description[:90]}...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                        <p>{desc[:80]}...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>'''
 
-        # 2. بناء الواجهة النيون الفخمة
+        # واجهة الموضة الراقية (Luxury Black & Gold)
         update_time = datetime.now().strftime('%H:%M')
         full_html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEX | رادار التريند</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>VORTEX VOGUE | عالم الأناقة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
-        :root {{ --bg: #050505; --card: #0d0d0d; --neon: #00f2ff; --purple: #7000ff; }}
-        body {{ background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; }}
-        header {{ padding: 20px 5%; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--neon); display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 100; }}
-        .logo {{ font-family: 'Orbitron', sans-serif; color: var(--neon); font-size: 20px; text-decoration: none; text-shadow: 0 0 5px var(--neon); }}
-        .container {{ max-width: 1100px; margin: 20px auto; padding: 0 15px; }}
-        .trends-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }}
-        .t-card {{ background: var(--card); border: 1px solid #1a1a1a; border-radius: 15px; transition: 0.3s; }}
-        .t-card:hover {{ border-color: var(--neon); transform: translateY(-5px); box-shadow: 0 0 15px rgba(0,242,255,0.1); }}
-        .t-card a {{ text-decoration: none; color: inherit; display: block; padding: 20px; }}
-        .t-header {{ display: flex; justify-content: space-between; margin-bottom: 15px; }}
-        .t-traffic {{ color: var(--neon); font-size: 11px; font-weight: bold; border: 1px solid var(--neon); padding: 2px 8px; border-radius: 20px; }}
-        .t-body h3 {{ font-size: 17px; margin: 0 0 10px; color: #fff; }}
-        .t-body p {{ font-size: 12px; color: #777; }}
-        .t-footer {{ display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }}
-        .t-btn {{ background: var(--purple); color: #fff; padding: 4px 12px; border-radius: 5px; font-size: 11px; }}
-        .ad-area {{ text-align: center; margin: 30px 0; }}
-        footer {{ text-align: center; padding: 40px; color: #333; font-size: 12px; }}
+        :root {{ --gold: #c5a059; --bg: #0a0a0a; --card: #141414; --text: #ffffff; }}
+        body {{ background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; margin: 0; }}
+        
+        header {{ background: #000; padding: 25px 5%; text-align: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000; }}
+        .logo {{ font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); text-decoration: none; letter-spacing: 3px; }}
+        
+        .container {{ max-width: 1200px; margin: 30px auto; padding: 0 15px; }}
+        
+        /* مساحة الإعلان الذكي */
+        .ad-zone {{ width: 100%; height: 250px; background: #000; margin-bottom: 40px; border: 1px solid #1a1a1a; overflow: hidden; }}
+        .ad-zone iframe {{ width: 100%; height: 100%; border: none; }}
+
+        .f-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }}
+        .f-card {{ background: var(--card); border-radius: 0px; overflow: hidden; transition: 0.5s; border: 1px solid #1a1a1a; }}
+        .f-card:hover {{ transform: translateY(-10px); border-color: var(--gold); }}
+        .f-card a {{ text-decoration: none; color: inherit; }}
+        
+        .f-img {{ position: relative; height: 250px; overflow: hidden; }}
+        .f-img img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }}
+        .f-card:hover .f-img img {{ transform: scale(1.1); }}
+        .f-overlay {{ position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }}
+        
+        .f-info {{ padding: 20px; }}
+        .f-tag {{ color: var(--gold); font-size: 10px; font-weight: 900; letter-spacing: 2px; }}
+        h3 {{ font-family: 'Playfair Display', serif; font-size: 19px; margin: 10px 0; line-height: 1.4; color: #fff; height: 54px; overflow: hidden; }}
+        p {{ color: #888; font-size: 13px; line-height: 1.6; }}
+        
+        .f-footer {{ display: flex; justify-content: space-between; margin-top: 20px; font-size: 11px; color: #444; border-top: 1px solid #222; padding-top: 15px; }}
+        .f-more {{ color: var(--gold); font-weight: bold; }}
+
+        footer {{ background: #000; padding: 60px; text-align: center; border-top: 1px solid #1a1a1a; margin-top: 50px; }}
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="logo">VORTEX TRENDS</a>
-        <div style="font-size: 11px; color: var(--neon);">Live: {update_time}</div>
+        <a href="#" class="logo">VORTEX VOGUE</a>
+        <div style="font-size: 10px; color: #444; margin-top: 5px;">LAST UPDATE: {update_time}</div>
     </header>
+
     <div class="container">
-        <div class="ad-area">
-            <script type="text/javascript" src="{smart_ad_link}"></script>
+        <div class="ad-zone">
+            <iframe src="{smart_ad_url}"></iframe>
         </div>
-        <div class="trends-grid">{trends_html}</div>
-        <div class="ad-area">
-            <script type="text/javascript" src="{smart_ad_link}"></script>
+
+        <div class="f-grid">{content_html}</div>
+
+        <div class="ad-zone" style="margin-top: 40px;">
+            <iframe src="{smart_ad_url}"></iframe>
         </div>
     </div>
-    <footer>VORTEX TRENDS © 2026</footer>
+
+    <footer>
+        <div style="font-family: 'Playfair Display', serif; color: var(--gold); font-size: 24px;">VV</div>
+        <p style="color: #333; font-size: 11px;">© 2026 VORTEX VOGUE DIGITAL FASHION EXPERIENCE</p>
+    </footer>
 </body>
 </html>'''
 
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(full_html)
-    except Exception as e: print(f"Error: {e}")
+        print("Fashion Site Updated!")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
-    run_trends_scraper()
+    run_vortex_vogue()
