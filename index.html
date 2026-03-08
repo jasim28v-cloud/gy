@@ -3,202 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEX | رادار التريند</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>VORTEX VOGUE | عالم الأناقة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --card: #0d0d0d; --neon: #00f2ff; --purple: #7000ff; }
-        body { background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; }
-        header { padding: 20px 5%; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--neon); display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .logo { font-family: 'Orbitron', sans-serif; color: var(--neon); font-size: 20px; text-decoration: none; text-shadow: 0 0 5px var(--neon); }
-        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-        .trends-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .t-card { background: var(--card); border: 1px solid #1a1a1a; border-radius: 15px; transition: 0.3s; }
-        .t-card:hover { border-color: var(--neon); transform: translateY(-5px); box-shadow: 0 0 15px rgba(0,242,255,0.1); }
-        .t-card a { text-decoration: none; color: inherit; display: block; padding: 20px; }
-        .t-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .t-traffic { color: var(--neon); font-size: 11px; font-weight: bold; border: 1px solid var(--neon); padding: 2px 8px; border-radius: 20px; }
-        .t-body h3 { font-size: 17px; margin: 0 0 10px; color: #fff; }
-        .t-body p { font-size: 12px; color: #777; }
-        .t-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
-        .t-btn { background: var(--purple); color: #fff; padding: 4px 12px; border-radius: 5px; font-size: 11px; }
-        .ad-area { text-align: center; margin: 30px 0; }
-        footer { text-align: center; padding: 40px; color: #333; font-size: 12px; }
+        :root { --gold: #c5a059; --bg: #0a0a0a; --card: #141414; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; margin: 0; }
+        
+        header { background: #000; padding: 25px 5%; text-align: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
+        
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
+        
+        /* مساحة الإعلان الذكي */
+        .ad-zone { width: 100%; height: 250px; background: #000; margin-bottom: 40px; border: 1px solid #1a1a1a; overflow: hidden; }
+        .ad-zone iframe { width: 100%; height: 100%; border: none; }
+
+        .f-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .f-card { background: var(--card); border-radius: 0px; overflow: hidden; transition: 0.5s; border: 1px solid #1a1a1a; }
+        .f-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+        .f-card a { text-decoration: none; color: inherit; }
+        
+        .f-img { position: relative; height: 250px; overflow: hidden; }
+        .f-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+        .f-card:hover .f-img img { transform: scale(1.1); }
+        .f-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+        
+        .f-info { padding: 20px; }
+        .f-tag { color: var(--gold); font-size: 10px; font-weight: 900; letter-spacing: 2px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 19px; margin: 10px 0; line-height: 1.4; color: #fff; height: 54px; overflow: hidden; }
+        p { color: #888; font-size: 13px; line-height: 1.6; }
+        
+        .f-footer { display: flex; justify-content: space-between; margin-top: 20px; font-size: 11px; color: #444; border-top: 1px solid #222; padding-top: 15px; }
+        .f-more { color: var(--gold); font-weight: bold; }
+
+        footer { background: #000; padding: 60px; text-align: center; border-top: 1px solid #1a1a1a; margin-top: 50px; }
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="logo">VORTEX TRENDS</a>
-        <div style="font-size: 11px; color: var(--neon);">Live: 16:14</div>
+        <a href="#" class="logo">VORTEX VOGUE</a>
+        <div style="font-size: 10px; color: #444; margin-top: 5px;">LAST UPDATE: 16:25</div>
     </header>
+
     <div class="container">
-        <div class="ad-area">
-            <script type="text/javascript" src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></script>
+        <div class="ad-zone">
+            <iframe src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></iframe>
         </div>
-        <div class="trends-grid">
-            <div class="t-card">
+
+        <div class="f-grid">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#1</span>
-                        <span class="t-traffic">1000+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>dominican republic baseball</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Jean Paul Gaultier Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#2</span>
-                        <span class="t-traffic">500+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>arshdeep singh</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>The Best Dressed Stars of the Week Nailed Casual Elegance</h3>
+                        <p>Turns out, dressed-down statement dressing is a thing—and A-listers are perfecti...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#3</span>
-                        <span class="t-traffic">200+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>unc wilmington basketball</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Niccolò Pasqualetti Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#4</span>
-                        <span class="t-traffic">1000+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>rutgers basketball</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Spring Nail Art Inspiration: 49 Pretty Styles to Inspire Your Next Manicure</h3>
+                        <p>Floral decals, gingham prints, and a very cool Pucci manicure—49 nail art design...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#5</span>
-                        <span class="t-traffic">10000+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>arnold palmer</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Akris Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#6</span>
-                        <span class="t-traffic">500+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>axar patel</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Lacoste Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#7</span>
-                        <span class="t-traffic">500+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>jasprit bumrah</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>From the Archives: Her Demons at Rest, Elizabeth Taylor Is Back in Top Form</h3>
+                        <p>“Liz,” by Georgina Howell, was originally published in the June 1991 issue of Vo...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#8</span>
-                        <span class="t-traffic">500+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>donovan mitchell</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>I Tried Dozens of Bridal Shower Dresses—Here’s How I Found the One</h3>
+                        <p>From pearl-embellished minis to lace gowns, one Vogue writer takes us through he...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#9</span>
-                        <span class="t-traffic">2000+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>leeds united vs norwich city</h3>
-                        <p>...</p>
-                    </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>14 Elle Fanning Performances That Paved the Way for Her Oscar Nomination</h3>
+                        <p>With a jaw-dropping quarter of a century of work already under her belt, the 27-...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div>
-            <div class="t-card">
+            <div class="f-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="t-header">
-                        <span class="t-number">#10</span>
-                        <span class="t-traffic">5000+ بحث</span>
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
                     </div>
-                    <div class="t-body">
-                        <h3>nascar race today</h3>
-                        <p>...</p>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>The Best Backstage Photos From the Fall 2026 Shows in Paris</h3>
+                        <p>Acielle Tanbetova snaps the best BTS moments at the fall 2026 shows in Paris....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
-                    <div class="t-footer">
-                        <span class="t-tag">Trending Now</span>
-                        <span class="t-btn">تحليل</span>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>The Best Street Style Photos From the Fall 2026 Shows in Paris</h3>
+                        <p>Phil Oh is capturing the best dressed guests at the fall 2026 shows in Paris....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Pierpaolo Piccioli and Sam Levinson on Bringing ‘Euphoria’ to Balenciaga</h3>
+                        <p>Ahead of the April 12 premiere of ‘Euphoria’ season 3, Balenciaga’s Pierpaolo Pi...</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Balenciaga Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Ann Demeulemeester Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Zuhair Murad Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="f-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="f-img">
+                        <img src="None" loading="lazy">
+                        <div class="f-overlay"></div>
+                    </div>
+                    <div class="f-info">
+                        <span class="f-tag">TRENDING</span>
+                        <h3>Comme des Garçons Fall 2026 Ready-to-Wear</h3>
+                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
+                        <div class="f-footer">
+                            <span>STYLE GUIDE 2026</span>
+                            <span class="f-more">التفاصيل ←</span>
+                        </div>
                     </div>
                 </a>
             </div></div>
-        <div class="ad-area">
-            <script type="text/javascript" src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></script>
+
+        <div class="ad-zone" style="margin-top: 40px;">
+            <iframe src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></iframe>
         </div>
     </div>
-    <footer>VORTEX TRENDS © 2026</footer>
+
+    <footer>
+        <div style="font-family: 'Playfair Display', serif; color: var(--gold); font-size: 24px;">VV</div>
+        <p style="color: #333; font-size: 11px;">© 2026 VORTEX VOGUE DIGITAL FASHION EXPERIENCE</p>
+    </footer>
 </body>
 </html>
