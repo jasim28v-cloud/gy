@@ -8,8 +8,10 @@ def run_trends_scraper():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
     
     try:
-        # الرابط الذكي المعتمد (الوحيد الآن)
+        # الرابط الذكي الجديد الذي طلبت حفظه واستبداله
         smart_ad_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+        # رابط الـ Redirect الأصلي الخاص بك
+        my_link = "https://www.effectivegatecpm.com/t3rvmzpu?key=26330eef1cb397212db567d1385dc0b9"
         
         # 1. جلب بيانات التريند
         response = requests.get(trends_url, headers=headers, timeout=20)
@@ -24,7 +26,7 @@ def run_trends_scraper():
             
             trends_html += f'''
             <div class="t-card">
-                <a href="{smart_ad_link}" target="_blank">
+                <a href="{my_link}" target="_blank">
                     <div class="t-header">
                         <span class="t-number">#{i+1}</span>
                         <span class="t-traffic">{traffic} بحث</span>
@@ -40,7 +42,7 @@ def run_trends_scraper():
                 </a>
             </div>'''
 
-        # 2. بناء الواجهة
+        # 2. بناء الواجهة النيون المحدثة
         update_time = datetime.now().strftime('%H:%M')
         full_html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -104,7 +106,7 @@ def run_trends_scraper():
 
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(full_html)
-        print("تم التحديث بنجاح باستخدام الرابط الذكي فقط.")
+        print("تم استبدال الرابط وتحديث الموقع بنجاح!")
     except Exception as e:
         print(f"Error: {e}")
 
