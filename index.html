@@ -3,335 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEX VOGUE | عالم الأناقة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <title>NEON RT | ULTRA PRIME</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c5a059; --bg: #0a0a0a; --card: #141414; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; margin: 0; }
+        :root { --neon-blue: #00f2ff; --glass: rgba(255, 255, 255, 0.05); --border: rgba(255, 255, 255, 0.1); }
+        body { 
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%); 
+            color: #fff; font-family: 'Cairo', sans-serif; margin: 0; min-height: 100vh;
+        }
         
-        header { background: #000; padding: 25px 5%; text-align: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); text-decoration: none; letter-spacing: 3px; }
-        
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
-        
-        /* مساحة الإعلان الذكي */
-        .ad-zone { width: 100%; height: 250px; background: #000; margin-bottom: 40px; border: 1px solid #1a1a1a; overflow: hidden; }
-        .ad-zone iframe { width: 100%; height: 100%; border: none; }
+        /* تأثير الخلفية الشفافة المتحركة */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.2; z-index: -1;
+        }
 
-        .f-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-        .f-card { background: var(--card); border-radius: 0px; overflow: hidden; transition: 0.5s; border: 1px solid #1a1a1a; }
-        .f-card:hover { transform: translateY(-10px); border-color: var(--gold); }
-        .f-card a { text-decoration: none; color: inherit; }
+        header { 
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(15px); padding: 20px 5%;
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 900; font-size: 26px; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); text-decoration: none; }
         
-        .f-img { position: relative; height: 250px; overflow: hidden; }
-        .f-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
-        .f-card:hover .f-img img { transform: scale(1.1); }
-        .f-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
-        
-        .f-info { padding: 20px; }
-        .f-tag { color: var(--gold); font-size: 10px; font-weight: 900; letter-spacing: 2px; }
-        h3 { font-family: 'Playfair Display', serif; font-size: 19px; margin: 10px 0; line-height: 1.4; color: #fff; height: 54px; overflow: hidden; }
-        p { color: #888; font-size: 13px; line-height: 1.6; }
-        
-        .f-footer { display: flex; justify-content: space-between; margin-top: 20px; font-size: 11px; color: #444; border-top: 1px solid #222; padding-top: 15px; }
-        .f-more { color: var(--gold); font-weight: bold; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
 
-        footer { background: #000; padding: 60px; text-align: center; border-top: 1px solid #1a1a1a; margin-top: 50px; }
+        /* الإعلانات الشفافة */
+        .prime-ad { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 30px; backdrop-filter: blur(10px); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        
+        /* كارت البرايم الشفاف */
+        .glass-card { 
+            background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--border);
+            border-radius: 24px; overflow: hidden; transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .glass-card:hover { 
+            transform: scale(1.03) translateY(-10px); background: rgba(255,255,255,0.08); 
+            border-color: var(--neon-blue); box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .glass-card a { text-decoration: none; color: inherit; }
+        
+        .card-img { height: 200px; overflow: hidden; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .glass-card:hover .card-img img { transform: scale(1.1); }
+
+        .card-body { padding: 20px; }
+        .live-tag { font-size: 10px; background: var(--neon-blue); color: #000; padding: 2px 10px; border-radius: 50px; font-weight: 900; }
+        h3 { margin: 15px 0; font-size: 17px; line-height: 1.5; color: #fff; height: 50px; overflow: hidden; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 12px; color: #777; }
+        .prime-btn { color: var(--neon-blue); border: 1px solid var(--neon-blue); padding: 4px 15px; border-radius: 8px; font-weight: bold; }
+
+        footer { text-align: center; padding: 60px; color: #444; font-size: 12px; }
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="logo">VORTEX VOGUE</a>
-        <div style="font-size: 10px; color: #444; margin-top: 5px;">LAST UPDATE: 16:25</div>
+        <a href="#" class="logo">NEON<span>RT</span></a>
+        <div style="font-size: 11px;">ULTRA PRIME v.1.0</div>
     </header>
 
     <div class="container">
-        <div class="ad-zone">
-            <iframe src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></iframe>
+        <div class="prime-ad">
+            <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
         </div>
 
-        <div class="f-grid">
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Jean Paul Gaultier Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>The Best Dressed Stars of the Week Nailed Casual Elegance</h3>
-                        <p>Turns out, dressed-down statement dressing is a thing—and A-listers are perfecti...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Niccolò Pasqualetti Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Spring Nail Art Inspiration: 49 Pretty Styles to Inspire Your Next Manicure</h3>
-                        <p>Floral decals, gingham prints, and a very cool Pucci manicure—49 nail art design...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Akris Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Lacoste Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>From the Archives: Her Demons at Rest, Elizabeth Taylor Is Back in Top Form</h3>
-                        <p>“Liz,” by Georgina Howell, was originally published in the June 1991 issue of Vo...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>I Tried Dozens of Bridal Shower Dresses—Here’s How I Found the One</h3>
-                        <p>From pearl-embellished minis to lace gowns, one Vogue writer takes us through he...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>14 Elle Fanning Performances That Paved the Way for Her Oscar Nomination</h3>
-                        <p>With a jaw-dropping quarter of a century of work already under her belt, the 27-...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>The Best Backstage Photos From the Fall 2026 Shows in Paris</h3>
-                        <p>Acielle Tanbetova snaps the best BTS moments at the fall 2026 shows in Paris....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>The Best Street Style Photos From the Fall 2026 Shows in Paris</h3>
-                        <p>Phil Oh is capturing the best dressed guests at the fall 2026 shows in Paris....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Pierpaolo Piccioli and Sam Levinson on Bringing ‘Euphoria’ to Balenciaga</h3>
-                        <p>Ahead of the April 12 premiere of ‘Euphoria’ season 3, Balenciaga’s Pierpaolo Pi...</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Balenciaga Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Ann Demeulemeester Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Zuhair Murad Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="f-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="f-img">
-                        <img src="None" loading="lazy">
-                        <div class="f-overlay"></div>
-                    </div>
-                    <div class="f-info">
-                        <span class="f-tag">TRENDING</span>
-                        <h3>Comme des Garçons Fall 2026 Ready-to-Wear</h3>
-                        <p>اكتشفي أحدث صيحات الموضة العالمية لهذا الموسم....</p>
-                        <div class="f-footer">
-                            <span>STYLE GUIDE 2026</span>
-                            <span class="f-more">التفاصيل ←</span>
-                        </div>
-                    </div>
-                </a>
-            </div></div>
+        <div class="grid"></div>
 
-        <div class="ad-zone" style="margin-top: 40px;">
-            <iframe src="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"></iframe>
+        <div class="prime-ad" style="margin-top: 40px;">
+            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
         </div>
     </div>
 
-    <footer>
-        <div style="font-family: 'Playfair Display', serif; color: var(--gold); font-size: 24px;">VV</div>
-        <p style="color: #333; font-size: 11px;">© 2026 VORTEX VOGUE DIGITAL FASHION EXPERIENCE</p>
-    </footer>
+    <footer>NEON RT DIGITAL EXPERIENCE © 2026</footer>
 </body>
 </html>
