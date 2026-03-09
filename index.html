@@ -3,113 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA PRIME | لومينا برايم</title>
+    <title>LUMINA PRIME | 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --gold: #ffcf4b; 
-            --accent: #00f2ff;
-            --glass: rgba(255, 255, 255, 0.05);
-            --bg: #030508;
-        }
+        :root { --gold: #ffcf4b; --accent: #00f2ff; --bg: #030508; --card: rgba(255,255,255,0.05); }
+        body { background: var(--bg); color: #fff; font-family: 'Cairo', sans-serif; margin: 0; }
         
-        body { 
-            background: var(--bg); 
-            background-image: radial-gradient(circle at 50% 50%, #0a111a 0%, #030508 100%);
-            color: #fff; 
-            font-family: 'Cairo', sans-serif; 
-            margin: 0; 
-            min-height: 100vh;
-        }
-
-        /* Header Ultra Prime */
         header { 
-            background: rgba(0, 0, 0, 0.4); 
-            backdrop-filter: blur(20px); 
-            padding: 20px 8%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            border-bottom: 1px solid var(--glass); 
-            position: sticky; top: 0; z-index: 1000; 
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); 
+            padding: 15px 8%; border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
-        .logo span { color: var(--gold); text-shadow: 0 0 15px var(--gold); }
+        .logo { font-family: 'Orbitron'; font-size: 22px; font-weight: 900; color: #fff; text-decoration: none; }
+        .logo span { color: var(--gold); }
 
-        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+        .container { max-width: 1250px; margin: 20px auto; padding: 0 15px; }
 
-        /* تصفح المباريات الشفاف */
-        .match-scroller { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 25px; scrollbar-width: none; }
+        /* شريط المباريات */
+        .match-scroller { display: flex; gap: 15px; overflow-x: auto; padding: 10px 0 25px; scrollbar-width: none; }
         .m-card { 
-            background: var(--glass); 
-            min-width: 220px; 
-            padding: 20px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            text-align: center; 
-            backdrop-filter: blur(10px);
-            transition: 0.5s ease;
+            background: var(--card); min-width: 200px; padding: 15px; 
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: center;
         }
-        .m-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(0, 242, 255, 0.05); }
-        .m-team { font-size: 14px; font-weight: 700; margin: 10px 0; }
-        .m-score { color: var(--accent); font-family: 'Orbitron'; font-weight: 900; font-size: 18px; text-shadow: 0 0 10px rgba(0,242,255,0.5); }
+        .m-score { color: var(--accent); font-family: 'Orbitron'; font-weight: 900; }
 
-        /* شبكة الأخبار ايلترا برايم */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .n-card { 
-            background: var(--glass); 
-            border-radius: 24px; 
-            overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.08); 
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(5px);
-        }
-        .n-card:hover { transform: scale(1.02); border-color: var(--gold); box-shadow: 0 15px 45px rgba(0,0,0,0.6); }
-        .n-card a { text-decoration: none; color: inherit; }
-        
-        .n-img { position: relative; height: 210px; }
-        .n-img img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
-        .n-badge { position: absolute; top: 15px; left: 15px; background: var(--gold); color: #000; font-size: 9px; font-weight: 900; padding: 5px 15px; border-radius: 50px; text-transform: uppercase; }
-        
-        .n-info { padding: 25px; }
-        .n-info h3 { font-size: 18px; margin: 0 0 15px 0; line-height: 1.6; font-weight: 700; height: 58px; overflow: hidden; }
-        .n-footer { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.5); border-top: 1px solid var(--glass); padding-top: 15px; }
-        .n-more { color: var(--gold); font-weight: 900; letter-spacing: 1px; }
+        /* شبكة الأخبار */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .n-card { background: var(--card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .n-img { height: 180px; position: relative; }
+        .n-img img { width: 100%; height: 100%; object-fit: cover; }
+        .n-info { padding: 20px; }
+        .n-info h3 { font-size: 16px; margin: 0 0 15px; line-height: 1.6; height: 50px; overflow: hidden; }
+        .n-footer { display: flex; justify-content: space-between; font-size: 12px; opacity: 0.6; }
+        .n-more { color: var(--gold); font-weight: bold; }
 
-        /* إعلانات مدمجة */
-        .ad-slot { display: flex; justify-content: center; margin: 40px 0; }
+        /* تنسيق الإعلانات */
+        .ad-container { display: flex; justify-content: center; align-items: center; margin: 30px 0; min-height: 250px; background: rgba(255,255,255,0.02); border-radius: 15px; }
+        .ad-in-grid { grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px 0; }
 
-        footer { 
-            padding: 80px 20px; text-align: center; border-top: 1px solid var(--glass); 
-            background: linear-gradient(transparent, rgba(255, 207, 75, 0.05)); margin-top: 80px; 
-        }
-        .f-logo { font-family: 'Orbitron'; font-size: 28px; font-weight: 900; margin-bottom: 20px; }
-
-        @media (max-width: 768px) {
-            .news-grid { grid-template-columns: 1fr; }
-            header { padding: 15px 5%; }
-        }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <header>
         <a href="#" class="logo">LUMINA<span>PRIME</span></a>
-        <div style="background: rgba(0, 242, 255, 0.1); color: var(--accent); padding: 5px 15px; border-radius: 50px; font-size: 11px; font-weight: bold; border: 1px solid var(--accent);">ULTRA STREAM</div>
+        <div style="color: var(--accent); font-size: 12px;"><i class="fas fa-signal"></i> LIVE STREAM</div>
     </header>
 
     <div class="container">
-        <div class="match-scroller">
-            
-        </div>
+        <div class="match-scroller"></div>
 
-        <div class="ad-slot">
+        <div class="ad-container">
             <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
         </div>
 
-        <h2 style="font-size: 26px; font-weight: 900; margin: 40px 0 30px; border-right: 5px solid var(--gold); padding-right: 15px;">آخر التغطيات <span style="color:var(--gold)">.</span></h2>
+        <h2 style="border-right: 4px solid var(--gold); padding-right: 15px; margin: 40px 0 25px;">الأخبار العاجلة</h2>
         
         <div class="news-grid">
             
+            <div class="n-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="n-img">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5c1c4c59b76fe4787e18.jpg" loading="lazy">
+                        <div class="n-badge">ULTRA</div>
+                    </div>
+                    <div class="n-info">
+                        <h3>تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال</h3>
+                        <div class="n-footer">
+                            <span><i class="far fa-clock"></i> 05:47</span>
+                            <span class="n-more">إقرأ المزيد</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="n-card">
+                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                    <div class="n-img">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4cbc4c59b76fe4787e0c.jpg" loading="lazy">
+                        <div class="n-badge">ULTRA</div>
+                    </div>
+                    <div class="n-info">
+                        <h3>مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح</h3>
+                        <div class="n-footer">
+                            <span><i class="far fa-clock"></i> 05:47</span>
+                            <span class="n-more">إقرأ المزيد</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
             <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
@@ -119,7 +102,7 @@
                     <div class="n-info">
                         <h3>برشلونة يتغنى بالظهور الأول لحمزة عبد الكريم</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -134,12 +117,12 @@
                     <div class="n-info">
                         <h3>ميلان يحسم "ديربي الغضب" ويتفوق على إنتر</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
                 </a>
-            </div>
+            </div><div class="ad-in-grid"><ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins></div>
             <div class="n-card">
                 <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
                     <div class="n-img">
@@ -149,7 +132,7 @@
                     <div class="n-info">
                         <h3>دينامو موسكو يلحق هزيمة ثقيلة بغريمه تسيسكا في الدوري الروسي</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -164,7 +147,7 @@
                     <div class="n-info">
                         <h3>أحداث فوضوية تخيم على خروج منتخب إيران للسيدات من كأس آسيا</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -179,7 +162,7 @@
                     <div class="n-info">
                         <h3>ألمانيا.. واقعة مثيرة للجدل أثناء مراجعة الحكام لضربة جزاء عبر شاشة تقنية "الفار"</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -194,7 +177,7 @@
                     <div class="n-info">
                         <h3>أول تعليق من سعود عبد الحميد بعد هدفه التاريخي في الدوري الفرنسي</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -209,7 +192,7 @@
                     <div class="n-info">
                         <h3>الكشف عن السبب الحقيقي وراء تراجع ريال مدريد عن ضم رودري من مانشستر سيتي</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -224,7 +207,7 @@
                     <div class="n-info">
                         <h3>النجم السعودي سعود عبد الحميد يكتب التاريخ في الدوري الفرنسي</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -239,7 +222,7 @@
                     <div class="n-info">
                         <h3>يوفنتوس يعود إلى سكة الانتصارات في الدوري الإيطالي برباعية أمام بيزا</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -254,37 +237,7 @@
                     <div class="n-info">
                         <h3>4 غيابات مؤثرة وعودة غافي بدون تصريح طبي.. فليك يعلن قائمة برشلونة لمواجهة نيوكاسل</h3>
                         <div class="n-footer">
-                            <span>09/03 - 04:55</span>
-                            <span class="n-more">إقرأ المزيد</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad8226423604706b5da6dc.png" loading="lazy">
-                        <div class="n-badge">ULTRA</div>
-                    </div>
-                    <div class="n-info">
-                        <h3>غوارديولا يكيل المديح لعمر مرموش ويحدد نقاط قوته وضعفه</h3>
-                        <div class="n-footer">
-                            <span>09/03 - 04:55</span>
-                            <span class="n-more">إقرأ المزيد</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad7daa4c59b7795d2166c9.png" loading="lazy">
-                        <div class="n-badge">ULTRA</div>
-                    </div>
-                    <div class="n-info">
-                        <h3>"ديربي الغضب" يخطف الأنظار في الجولة 28 من الدوري الإيطالي</h3>
-                        <div class="n-footer">
-                            <span>09/03 - 04:55</span>
+                            <span><i class="far fa-clock"></i> 05:47</span>
                             <span class="n-more">إقرأ المزيد</span>
                         </div>
                     </div>
@@ -292,14 +245,14 @@
             </div>
         </div>
 
-        <div class="ad-slot">
-             <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
+        <div class="ad-container">
+            <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
         </div>
     </div>
 
-    <footer>
-        <div class="f-logo">LUMINA <span>PRIME</span></div>
-        <p style="opacity: 0.6; font-size: 14px;">نظام رصد إخباري فائق الجودة - جميع الحقوق محفوظة 2026</p>
+    <footer style="text-align: center; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 50px;">
+        <div class="logo">LUMINA<span>PRIME</span></div>
+        <p style="opacity: 0.5;">حقوق النشر 2026 - تم التطوير لتقديم أفضل تجربة رياضية</p>
     </footer>
 </body>
 </html>
