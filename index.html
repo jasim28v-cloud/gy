@@ -3,360 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA PRIME ULTRA | السينمائي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;800&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>رياضة 24 | النسخة المطورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --gold: #ffcf4b; 
-            --accent: #00f2ff;
-            --dark: #05070a;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --primary-accent: #00f2fe;
+            --danger-accent: #ff0844;
+            --text-main: #ffffff;
         }
-        
-        html { scroll-behavior: smooth; }
-        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--dark); color: #e0e0e0; font-family: 'Cairo', sans-serif; margin: 0; 
-            background-image: radial-gradient(circle at 50% 50%, #0a111a 0%, #030508 100%);
-            min-height: 100vh; overflow-x: hidden;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Cairo', sans-serif; 
+            color: var(--text-main); 
+            padding-top: 150px;
         }
-
-        /* Header Ultra */
+        
         header { 
-            background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(25px); 
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; 
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(25px); 
+            padding: 15px 5%; 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center; 
         }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
-        .logo span { color: var(--gold); text-shadow: 0 0 20px rgba(255,207,75,0.4); }
-
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
-
-        /* شريط المباريات المتطور */
-        .match-ticker { 
-            display: flex; gap: 15px; overflow-x: auto; padding: 10px 0 30px; 
-            scrollbar-width: none;
+        .logo { font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }
+        .logo span { color: var(--danger-accent); text-shadow: 0 0 10px var(--danger-accent); }
+        
+        .ticker-wrap { 
+            position: fixed; top: 85px; width: 100%; 
+            background: rgba(255, 8, 68, 0.85); 
+            backdrop-filter: blur(10px);
+            color: #fff; overflow: hidden; height: 40px; 
+            display: flex; align-items: center; z-index: 999;
         }
-        .match-ticker::-webkit-scrollbar { display: none; }
-        
-        .m-card { 
-            background: var(--card-bg); min-width: 260px; padding: 20px; border-radius: 18px; 
-            border: 1px solid var(--border); position: relative; backdrop-filter: blur(10px);
-        }
-        .m-card:hover { background: rgba(255,255,255,0.07); border-color: var(--accent); }
-        .m-status { font-size: 10px; background: #ff4b4b; color: white; padding: 2px 8px; border-radius: 4px; position: absolute; top: 10px; right: 10px; animation: pulse 2s infinite; }
-        .m-teams-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .m-team { font-size: 13px; font-weight: 600; flex: 1; text-align: center; color: #aaa; }
-        .m-score { color: var(--accent); font-family: 'Orbitron'; font-weight: 700; font-size: 20px; margin: 0 15px; }
+        .ticker-title { background: #000; padding: 0 20px; font-weight: 900; z-index: 2; height: 100%; display: flex; align-items: center; font-size: 13px; }
+        .ticker-scroll { white-space: nowrap; animation: scroll 60s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-250%); } }
 
-        /* شبكة الأخبار السينمائية الضخمة */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
-        .n-card { 
-            background: var(--card-bg); border-radius: 22px; overflow: hidden; 
-            border: 1px solid var(--border); height: 100%; position: relative;
+        .container { max-width: 1250px; margin: 0 auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        .glass-card { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(20px);
+            border-radius: 25px; overflow: hidden; 
+            transition: 0.4s; 
+            border: 1px solid var(--glass-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        .n-card:hover { transform: scale(1.03); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .n-card a { text-decoration: none; color: inherit; }
+        .glass-card:hover { transform: scale(1.03); border-color: var(--primary-accent); }
         
-        .n-img-wrapper { position: relative; height: 260px; overflow: hidden; }
-        .n-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        .n-card:hover .n-img-wrapper img { transform: scale(1.1); }
+        .badge { position: absolute; top: 15px; left: 15px; background: var(--danger-accent); color: #fff; padding: 4px 15px; font-size: 11px; font-weight: 700; border-radius: 10px; z-index: 5; }
+        .card-image { height: 210px; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; }
         
-        .n-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--dark) 10%, transparent 60%); }
-        .n-badge { position: absolute; top: 15px; left: 15px; background: var(--gold); color: #000; font-size: 11px; font-weight: 800; padding: 4px 15px; border-radius: 6px; }
+        .card-content { padding: 25px; }
+        .card-title { font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.5; }
+        .card-snippet { font-size: 13px; color: #ccc; margin-bottom: 20px; }
         
-        .n-content { padding: 25px; margin-top: -60px; position: relative; z-index: 2; }
-        .n-content h3 { font-size: 18px; margin: 0 0 15px; line-height: 1.6; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .n-meta { display: flex; justify-content: space-between; align-items: center; color: #888; font-size: 12px; }
-        .n-btn { color: var(--gold); font-weight: 800; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 10px; font-size: 13px; }
-
-        /* الإعلانات بتنسيق ألترا */
-        .ad-slot-ultra { display: flex; justify-content: center; align-items: center; margin: 50px 0; border: 1px dashed var(--border); padding: 20px; border-radius: 20px; }
-        .ad-grid-box { grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .meta-data { display: flex; justify-content: space-between; font-size: 11px; color: var(--primary-accent); margin-bottom: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px; }
         
-        @media (max-width: 768px) {
-            .news-grid { grid-template-columns: 1fr; }
-            .container { padding: 15px; }
-            .logo { font-size: 20px; }
-        }
+        .action-area { display: flex; gap: 10px; }
+        .btn-prime { flex: 2; background: linear-gradient(90deg, #ff0844, #ffb199); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-weight: 700; }
+        .btn-outline { flex: 1; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-size: 12px; border: 1px solid var(--glass-border); }
+        
+        .ad-slot-wrapper { grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px dashed var(--glass-border); }
+        
+        footer { text-align: center; padding: 40px; color: rgba(255,255,255,0.4); font-size: 12px; border-top: 1px solid var(--glass-border); }
+        
+        @media (max-width: 600px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">LUMINA<span>PRIME</span></a>
-        <div style="font-size: 11px; border: 1px solid var(--accent); padding: 5px 15px; border-radius: 50px; color: var(--accent); font-weight: 600;">ULTRA CONNECT</div>
+    <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script> <header>
+        <a href="#" class="logo">رياضة <span>24</span></a>
+        <div style="font-size: 12px; letter-spacing: 1px;">📅 2026-03-09</div>
     </header>
 
-    <div class="container">
-        <div class="match-ticker">
-            
-        </div>
-
-        <div class="ad-slot-ultra">
-            <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
-        </div>
-
-        <h2 style="font-size: 28px; font-weight: 800; margin: 50px 0 30px; display: flex; align-items: center; gap: 15px; border-right: 5px solid var(--gold); padding-right: 15px;">
-            <i class="fas fa-bolt" style="color:var(--gold)"></i> آخر الأخبار
-        </h2>
-        
-        <div class="news-grid">
-            
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae725c42360469b703bb1b.jpg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>القادسية السعودي يعزز صفوفه بظهير مغربي متألق</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5a3d4c59b771af5095f7.jpg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>لابورتا منع ميسي من العودة إلى برشلونة.. تشافي يثير الجدل بتصريحات خطيرة (فيديو)</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5c1c4c59b76fe4787e18.jpg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4cbc4c59b76fe4787e0c.jpg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae490f42360467eb150b05.jpg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>برشلونة يتغنى بالظهور الأول لحمزة عبد الكريم</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div><div class="ad-grid-box"><ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins></div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adf4d342360423d40db3cf.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>ميلان يحسم "ديربي الغضب" ويتفوق على إنتر</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ade2dc42360427574b4f3b.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>دينامو موسكو يلحق هزيمة ثقيلة بغريمه تسيسكا في الدوري الروسي</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69add20d423604267d4b14dc.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>أحداث فوضوية تخيم على خروج منتخب إيران للسيدات من كأس آسيا</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adc41e4c59b772e570e39c.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>ألمانيا.. واقعة مثيرة للجدل أثناء مراجعة الحكام لضربة جزاء عبر شاشة تقنية "الفار"</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adb91242360423d40db368.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>أول تعليق من سعود عبد الحميد بعد هدفه التاريخي في الدوري الفرنسي</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adaf744236042516704cd3.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>الكشف عن السبب الحقيقي وراء تراجع ريال مدريد عن ضم رودري من مانشستر سيتي</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ada3ff4c59b702da655fd2.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>النجم السعودي سعود عبد الحميد يكتب التاريخ في الدوري الفرنسي</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad916b4c59b77f14053369.jpeg" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>يوفنتوس يعود إلى سكة الانتصارات في الدوري الإيطالي برباعية أمام بيزا</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad85f44236046df617f609.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>4 غيابات مؤثرة وعودة غافي بدون تصريح طبي.. فليك يعلن قائمة برشلونة لمواجهة نيوكاسل</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="n-card">
-                <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad8226423604706b5da6dc.png" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>غوارديولا يكيل المديح لعمر مرموش ويحدد نقاط قوته وضعفه</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> 08:51</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class="ad-slot-ultra" style="border:none;">
-            <script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>
-        </div>
+    <div class="ticker-wrap">
+        <div class="ticker-title">أهم الأنباء</div>
+        <div class="ticker-scroll">محمد صلاح يخطف الأضواء ويثير التكهنات بفيديو مع ابنته • القادسية السعودي يعزز صفوفه بظهير مغربي متألق • لابورتا منع ميسي من العودة إلى برشلونة.. تشافي يثير الجدل بتصريحات خطيرة (فيديو) • تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال • مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح • برشلونة يتغنى بالظهور الأول لحمزة عبد الكريم • ميلان يحسم "ديربي الغضب" ويتفوق على إنتر • دينامو موسكو يلحق هزيمة ثقيلة بغريمه تسيسكا في الدوري الروسي • أحداث فوضوية تخيم على خروج منتخب إيران للسيدات من كأس آسيا • ألمانيا.. واقعة مثيرة للجدل أثناء مراجعة الحكام لضربة جزاء عبر شاشة تقنية "الفار" • أول تعليق من سعود عبد الحميد بعد هدفه التاريخي في الدوري الفرنسي • الكشف عن السبب الحقيقي وراء تراجع ريال مدريد عن ضم رودري من مانشستر سيتي</div>
     </div>
 
-    <footer style="text-align: center; padding: 80px 20px; background: rgba(0,0,0,0.4); border-top: 1px solid var(--border); margin-top: 80px;">
-        <div class="logo">LUMINA<span>PRIME</span></div>
-        <p style="opacity: 0.4; margin-top: 20px; font-size: 14px;">تجربة مستخدم "ألترا" فائقة الفخامة © 2026</p>
+    <main class="container">
+        
+            <article class="glass-card">
+                <div class="badge">حصري</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae8a2542360467e008060a.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">محمد صلاح يخطف الأضواء ويثير التكهنات بفيديو مع ابنته</h2>
+                    <p class="card-snippet">
+         أثار النجم المصري محمد صلاح التكهنات بعد أن نشر مقطع فيديو مع ابنته الصغرى كيان عبر حسابه الشخصي بمو...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765480-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD-%D9%8A%D8%AE%D8%B7%D9%81-%D8%A7%D9%84%D8%A3%D8%B6%D9%88%D8%A7%D8%A1-%D9%88%D9%8A%D8%AB%D9%8A%D8%B1-%D8%A7%D9%84%D8%AA%D9%83%D9%87%D9%86%D8%A7%D8%AA-%D8%A8%D9%81%D9%8A%D8%AF%D9%8A%D9%88-%D9%85%D8%B9-%D8%A7%D8%A8%D9%86%D8%AA%D9%87/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">حصري</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae725c42360469b703bb1b.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">القادسية السعودي يعزز صفوفه بظهير مغربي متألق</h2>
+                    <p class="card-snippet">
+         وصل نادي القادسية السعودي إلى اتفاق مع الظهير الأيسر المغربي سفيان الكرواني لاعب أوتريخت الهولندي لل...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765477-%D8%A7%D9%84%D9%82%D8%A7%D8%AF%D8%B3%D9%8A%D8%A9-%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8%D9%8A-%D9%8A%D8%B9%D8%B2%D8%B2-%D8%B5%D9%81%D9%88%D9%81%D9%87-%D8%A8%D8%B8%D9%87%D9%8A%D8%B1-%D9%85%D8%BA%D8%B1%D8%A8%D9%8A-%D9%85%D8%AA%D8%A3%D9%84%D9%82/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">حصري</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5a3d4c59b771af5095f7.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">لابورتا منع ميسي من العودة إلى برشلونة.. تشافي يثير الجدل بتصريحات خطيرة (فيديو)</h2>
+                    <p class="card-snippet">
+         أشعل الأسطورة والمدرب السابق لبرشلونة تشافي هيرنانديز الأجواء بتصريحات مثيرة للجدل خلال مقابلة مع صح...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765448-%D9%84%D8%A7%D8%A8%D9%88%D8%B1%D8%AA%D8%A7-%D9%85%D9%86%D8%B9-%D9%85%D9%8A%D8%B3%D9%8A-%D9%85%D9%86-%D8%A7%D9%84%D8%B9%D9%88%D8%AF%D8%A9-%D8%A5%D9%84%D9%89-%D8%A8%D8%B1%D8%B4%D9%84%D9%88%D9%86%D8%A9-%D8%AA%D8%B4%D8%A7%D9%81%D9%8A-%D9%8A%D8%AB%D9%8A%D8%B1-%D8%A7%D9%84%D8%AC%D8%AF%D9%84-%D8%A8%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD%D8%A7%D8%AA-%D8%AE%D8%B7%D9%8A%D8%B1%D8%A9-%D9%81%D9%8A%D8%AF%D9%8A%D9%88/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae5c1c4c59b76fe4787e18.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">تقارير تحسم موقف مبابي من مباراة ريال مدريد ومانشستر سيتي في دوري الأبطال</h2>
+                    <p class="card-snippet">
+         كشفت تقارير صحفية فرنسية عن موقف كيليان مبابي من خوض مباراة ريال مدريد ومانشستر سيتي يوم الأربعاء ال...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765457-%D8%AA%D9%82%D8%A7%D8%B1%D9%8A%D8%B1-%D8%AA%D8%AD%D8%B3%D9%85-%D9%85%D9%88%D9%82%D9%81-%D9%85%D8%A8%D8%A7%D8%A8%D9%8A-%D9%85%D9%86-%D9%85%D8%A8%D8%A7%D8%B1%D8%A7%D8%A9-%D8%B1%D9%8A%D8%A7%D9%84-%D9%85%D8%AF%D8%B1%D9%8A%D8%AF-%D9%88%D9%85%D8%A7%D9%86%D8%B4%D8%B3%D8%AA%D8%B1-%D8%B3%D9%8A%D8%AA%D9%8A-%D9%81%D9%8A-%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A3%D8%A8%D8%B7%D8%A7%D9%84/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+                <div class="ad-slot-wrapper">
+                    <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+                </div>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae4cbc4c59b76fe4787e0c.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">مفاجأة..  نجم من الاتحاد السعودي على رادار ليفربول لخلافة محمد صلاح</h2>
+                    <p class="card-snippet">
+         بدأت إدارة نادي ليفربول الإنجليزي منذ فترة الترتيب للتعاقد مع جناح هجومي جديد لخلافة النجم المصري مح...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765443-%D9%85%D9%81%D8%A7%D8%AC%D8%A3%D8%A9-%D9%86%D8%AC%D9%85-%D9%85%D9%86-%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A-%D8%B9%D9%84%D9%89-%D8%B1%D8%A7%D8%AF%D8%A7%D8%B1-%D9%84%D9%8A%D9%81%D8%B1%D8%A8%D9%88%D9%84-%D9%84%D8%AE%D9%84%D8%A7%D9%81%D8%A9-%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D9%84%D8%A7%D8%AD/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ae490f42360467eb150b05.jpg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">برشلونة يتغنى بالظهور الأول لحمزة عبد الكريم</h2>
+                    <p class="card-snippet">
+         بعد 40 يوما على إعلان نادي برشلونة الإسباني التعاقد مع المهاجم المصري حمزة عبد الكريم أثبت اللاعب نف...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765441-%D8%A8%D8%B1%D8%B4%D9%84%D9%88%D9%86%D8%A9-%D9%8A%D8%AA%D8%BA%D9%86%D9%89-%D8%A8%D8%A7%D9%84%D8%B8%D9%87%D9%88%D8%B1-%D8%A7%D9%84%D8%A3%D9%88%D9%84-%D9%84%D8%AD%D9%85%D8%B2%D8%A9-%D8%B9%D8%A8%D8%AF-%D8%A7%D9%84%D9%83%D8%B1%D9%8A%D9%85/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adf4d342360423d40db3cf.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">ميلان يحسم "ديربي الغضب" ويتفوق على إنتر</h2>
+                    <p class="card-snippet">
+         قلص ميلان الفارق مع غريمه التقليدي إنتر ميلان متصدر ترتيب الدوري الإيطالي، وذلك بعد فوزه عليه بهدف د...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765408-%D9%85%D9%8A%D9%84%D8%A7%D9%86-%D9%8A%D8%AD%D8%B3%D9%85-%D8%AF%D9%8A%D8%B1%D8%A8%D9%8A-%D8%A7%D9%84%D8%BA%D8%B6%D8%A8-%D9%88%D9%8A%D8%AA%D9%81%D9%88%D9%82-%D8%B9%D9%84%D9%89-%D8%A5%D9%86%D8%AA%D8%B1/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ade2dc42360427574b4f3b.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">دينامو موسكو يلحق هزيمة ثقيلة بغريمه تسيسكا في الدوري الروسي</h2>
+                    <p class="card-snippet">
+         حقق دينامو موسكو فوزا كاسحا على مضيفه وغريمه التقليدي تسيسكا موسكو بنتيجة 4-1 في مباراة جمعتهما مساء...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765373-%D8%AF%D9%8A%D9%86%D8%A7%D9%85%D9%88-%D9%85%D9%88%D8%B3%D9%83%D9%88-%D9%8A%D9%84%D8%AD%D9%82-%D9%87%D8%B2%D9%8A%D9%85%D8%A9-%D8%AB%D9%82%D9%8A%D9%84%D8%A9-%D8%A8%D8%BA%D8%B1%D9%8A%D9%85%D9%87-%D8%AA%D8%B3%D9%8A%D8%B3%D9%83%D8%A7-%D9%81%D9%8A-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+                <div class="ad-slot-wrapper">
+                    <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+                </div>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69add20d423604267d4b14dc.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">أحداث فوضوية تخيم على خروج منتخب إيران للسيدات من كأس آسيا</h2>
+                    <p class="card-snippet">
+         خيمت أحداث فوضوية على خروج منتخب إيران لكرة القدم للسيدات من كأس آسيا المقامة حاليا في أستراليا، بعد...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765356-%D8%A3%D8%AD%D8%AF%D8%A7%D8%AB-%D9%81%D9%88%D8%B6%D9%88%D9%8A%D8%A9-%D8%AA%D8%AE%D9%8A%D9%85-%D8%B9%D9%84%D9%89-%D8%AE%D8%B1%D9%88%D8%AC-%D9%85%D9%86%D8%AA%D8%AE%D8%A8-%D8%A5%D9%8A%D8%B1%D8%A7%D9%86-%D9%84%D9%84%D8%B3%D9%8A%D8%AF%D8%A7%D8%AA-%D9%85%D9%86-%D9%83%D8%A3%D8%B3-%D8%A2%D8%B3%D9%8A%D8%A7/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adc41e4c59b772e570e39c.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">ألمانيا.. واقعة مثيرة للجدل أثناء مراجعة الحكام لضربة جزاء عبر شاشة تقنية "الفار"</h2>
+                    <p class="card-snippet">
+         قام شخصان ملثمان بفصل التيار الكهربائي أثناء مراجعة الحكام لضربة جزاء عبر الشاشة من خلال تقنية حكم ا...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765331-%D8%A3%D9%84%D9%85%D8%A7%D9%86%D9%8A%D8%A7-%D9%88%D8%A7%D9%82%D8%B9%D8%A9-%D9%85%D8%AB%D9%8A%D8%B1%D8%A9-%D9%84%D9%84%D8%AC%D8%AF%D9%84-%D8%A3%D8%AB%D9%86%D8%A7%D8%A1-%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%A9-%D8%A7%D9%84%D8%AD%D9%83%D8%A7%D9%85-%D9%84%D8%B6%D8%B1%D8%A8%D8%A9-%D8%AC%D8%B2%D8%A7%D8%A1-%D8%B9%D8%A8%D8%B1-%D8%B4%D8%A7%D8%B4%D8%A9-%D8%AA%D9%82%D9%86%D9%8A%D8%A9-%D8%A7%D9%84%D9%81%D8%A7%D8%B1/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adb91242360423d40db368.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">أول تعليق من سعود عبد الحميد بعد هدفه التاريخي في الدوري الفرنسي</h2>
+                    <p class="card-snippet">
+         عبر المدافع السعودي سعود عبد الحميد عن سعادته الغامرة بعد تسجيله هدفا مميزا وتاريخيا خلال مواجهة فري...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765312-%D8%A3%D9%88%D9%84-%D8%AA%D8%B9%D9%84%D9%8A%D9%82-%D9%85%D9%86-%D8%B3%D8%B9%D9%88%D8%AF-%D8%B9%D8%A8%D8%AF-%D8%A7%D9%84%D8%AD%D9%85%D9%8A%D8%AF-%D8%A8%D8%B9%D8%AF-%D9%87%D8%AF%D9%81%D9%87-%D8%A7%D9%84%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE%D9%8A-%D9%81%D9%8A-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D9%81%D8%B1%D9%86%D8%B3%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69adaf744236042516704cd3.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">الكشف عن السبب الحقيقي وراء تراجع ريال مدريد عن ضم رودري من مانشستر سيتي</h2>
+                    <p class="card-snippet">
+         يخطط نادي ريال مدريد لتعزيز خط وسط الفريق بالتعاقد مع لاعب جديد خلال فترة الانتقالات الصيفية، في إطا...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765292-%D8%A7%D9%84%D9%83%D8%B4%D9%81-%D8%B9%D9%86-%D8%A7%D9%84%D8%B3%D8%A8%D8%A8-%D8%A7%D9%84%D8%AD%D9%82%D9%8A%D9%82%D9%8A-%D9%88%D8%B1%D8%A7%D8%A1-%D8%AA%D8%B1%D8%A7%D8%AC%D8%B9-%D8%B1%D9%8A%D8%A7%D9%84-%D9%85%D8%AF%D8%B1%D9%8A%D8%AF-%D8%B9%D9%86-%D8%B6%D9%85-%D8%B1%D9%88%D8%AF%D8%B1%D9%8A-%D9%85%D9%86-%D9%85%D8%A7%D9%86%D8%B4%D8%B3%D8%AA%D8%B1-%D8%B3%D9%8A%D8%AA%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+                <div class="ad-slot-wrapper">
+                    <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+                </div>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ada3ff4c59b702da655fd2.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">النجم السعودي سعود عبد الحميد يكتب التاريخ في الدوري الفرنسي</h2>
+                    <p class="card-snippet">
+         سجل المدافع السعودي سعود عبد الحميد هدفه الأول في الدوري الفرنسي، ليدون اسمه بحروف من ذهب في تاريخ ا...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765265-%D8%A7%D9%84%D9%86%D8%AC%D9%85-%D8%A7%D9%84%D8%B3%D8%B9%D9%88%D8%AF%D9%8A-%D8%B3%D8%B9%D9%88%D8%AF-%D8%B9%D8%A8%D8%AF-%D8%A7%D9%84%D8%AD%D9%85%D9%8A%D8%AF-%D9%8A%D9%83%D8%AA%D8%A8-%D8%A7%D9%84%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE-%D9%81%D9%8A-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D9%81%D8%B1%D9%86%D8%B3%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad916b4c59b77f14053369.jpeg" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">يوفنتوس يعود إلى سكة الانتصارات في الدوري الإيطالي برباعية أمام بيزا</h2>
+                    <p class="card-snippet">
+         استعاد فريق يوفنتوس نغمة الانتصارات في الدوري الإيطالي لكرة القدم بعد غياب، ليحقق فوزا كبيرا على بيز...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765243-%D9%8A%D9%88%D9%81%D9%86%D8%AA%D9%88%D8%B3-%D9%8A%D8%B9%D9%88%D8%AF-%D8%A5%D9%84%D9%89-%D8%B3%D9%83%D8%A9-%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%B5%D8%A7%D8%B1%D8%A7%D8%AA-%D9%81%D9%8A-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A-%D8%A8%D8%B1%D8%A8%D8%A7%D8%B9%D9%8A%D8%A9-%D8%A3%D9%85%D8%A7%D9%85-%D8%A8%D9%8A%D8%B2%D8%A7/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad85f44236046df617f609.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">4 غيابات مؤثرة وعودة غافي بدون تصريح طبي.. فليك يعلن قائمة برشلونة لمواجهة نيوكاسل</h2>
+                    <p class="card-snippet">
+         أعلن الألماني هانز فليك مدرب برشلونة قائمة فريقه لمواجهة مضيفه نيوكاسل المقررة بعد غد الثلاثاء في ذه...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765221-4-%D8%BA%D9%8A%D8%A7%D8%A8%D8%A7%D8%AA-%D9%85%D8%A4%D8%AB%D8%B1%D8%A9-%D9%88%D8%B9%D9%88%D8%AF%D8%A9-%D8%BA%D8%A7%D9%81%D9%8A-%D8%A8%D8%AF%D9%88%D9%86-%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D8%B7%D8%A8%D9%8A-%D9%81%D9%84%D9%8A%D9%83-%D9%8A%D8%B9%D9%84%D9%86-%D9%82%D8%A7%D8%A6%D9%85%D8%A9-%D8%A8%D8%B1%D8%B4%D9%84%D9%88%D9%86%D8%A9-%D9%84%D9%85%D9%88%D8%A7%D8%AC%D9%87%D8%A9-%D9%86%D9%8A%D9%88%D9%83%D8%A7%D8%B3%D9%84/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad8226423604706b5da6dc.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">غوارديولا يكيل المديح لعمر مرموش ويحدد نقاط قوته وضعفه</h2>
+                    <p class="card-snippet">
+         أشاد مدرب مانشستر سيتي بيب غوارديولا بأداء النجم المصري عمر مرموش عقب تألقه بتسجيل ثنائية ساهمت في ف...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765215-%D8%A8%D8%B9%D8%AF-%D8%AA%D8%A3%D9%84%D9%82%D9%87-%D8%A3%D9%85%D8%A7%D9%85-%D9%86%D9%8A%D9%88%D9%83%D8%A7%D8%B3%D9%84-%D8%BA%D9%88%D8%A7%D8%B1%D8%AF%D9%8A%D9%88%D9%84%D8%A7-%D9%8A%D8%B4%D9%8A%D8%AF-%D8%A8%D8%B9%D9%85%D8%B1-%D9%85%D8%B1%D9%85%D9%88%D8%B4-%D9%88%D9%8A%D8%AD%D8%AF%D8%AF-%D9%86%D9%82%D8%A7%D8%B7-%D9%82%D9%88%D8%AA%D9%87-%D9%88%D8%B6%D8%B9%D9%81%D9%87/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+                <div class="ad-slot-wrapper">
+                    <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+                </div>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad7daa4c59b7795d2166c9.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">"ديربي الغضب" يخطف الأنظار في الجولة 28 من الدوري الإيطالي</h2>
+                    <p class="card-snippet">
+         تتجه الأنظار مساء الأحد إلى ملعب "سان سيرو" في مدينة ميلانو الإيطالية، الذي سيكون مسرحا لموقعة ميلان...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765208-%D8%AF%D9%8A%D8%B1%D8%A8%D9%8A-%D8%A7%D9%84%D8%BA%D8%B6%D8%A8-%D9%8A%D8%AE%D8%B7%D9%81-%D8%A7%D9%84%D8%A3%D9%86%D8%B8%D8%A7%D8%B1-%D9%81%D9%8A-%D8%A7%D9%84%D8%AC%D9%88%D9%84%D8%A9-28-%D9%85%D9%86-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%A5%D9%8A%D8%B7%D8%A7%D9%84%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad6fb8423604706b5da6be.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">وفاة لاعب كرة القدم الكويتي فهد المجمد أثناء أداء واجبه العسكري</h2>
+                    <p class="card-snippet">
+         توفي لاعب كرة القدم الكويتي السابق فهد المجمد عن 33 عاما خلال أداء واجبه العسكري في بلاده، نتيجة الح...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765189-%D9%88%D9%81%D8%A7%D8%A9-%D9%84%D8%A7%D8%B9%D8%A8-%D9%83%D8%B1%D8%A9-%D8%A7%D9%84%D9%82%D8%AF%D9%85-%D9%81%D9%87%D8%AF-%D8%A7%D9%84%D9%85%D8%AC%D9%85%D8%AF-%D8%A3%D8%AB%D9%86%D8%A7%D8%A1-%D8%A3%D8%AF%D8%A7%D8%A1-%D9%88%D8%A7%D8%AC%D8%A8%D9%87-%D8%A7%D9%84%D8%B9%D8%B3%D9%83%D8%B1%D9%8A-%D9%81%D9%8A-%D8%A7%D9%84%D9%83%D9%88%D9%8A%D8%AA/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad69d34c59b77d3326e47c.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">تشيلسي ينجو من فخ ريكسهام ويتأهل إلى ربع نهائي كأس الاتحاد الإنجليزي</h2>
+                    <p class="card-snippet">
+         فاز تشيلسي بصعوبة على مضيفه ريكسهام أحد أندية الدرجة الثانية بنتيجة 4-2 بعد مباراة ماراثونية، ليتأهل...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765183-%D8%AA%D8%B4%D9%8A%D9%84%D8%B3%D9%8A-%D9%8A%D9%86%D8%AC%D9%88-%D9%85%D9%86-%D9%81%D8%AE-%D8%B1%D9%8A%D9%83%D8%B3%D9%87%D8%A7%D9%85-%D9%88%D9%8A%D8%AA%D8%A3%D9%87%D9%84-%D8%A5%D9%84%D9%89-%D8%B1%D8%A8%D8%B9-%D9%86%D9%87%D8%A7%D8%A6%D9%8A-%D9%83%D8%A3%D8%B3-%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF-%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+            <article class="glass-card">
+                <div class="badge">خبر</div>
+                <div class="card-image">
+                    <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank">
+                        <img src="https://mf.b37mrtl.ru/media/pics/2026.03/thumbnail/69ad63754236046e055f4180.png" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">زينيت يهدر ركلتي جزاء ويتكبد خسارة مفاجئة أمام أورنبورغ في الدوري الروسي</h2>
+                    <p class="card-snippet">
+         مني نادي زينيت بطرسبورغ بخسارة مفاجئة على يد مضيفه أورنبورغ بنتيجة 1-2 في مباراة جمعتهما اليوم الأحد...</p>
+                    <div class="meta-data">
+                        <span>🕒 09:52 AM</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="https://arabic.rt.com/sport/1765173-%D8%B2%D9%8A%D9%86%D9%8A%D8%AA-%D9%8A%D9%87%D8%AF%D8%B1-%D8%B1%D9%83%D9%84%D8%AA%D9%8A-%D8%AC%D8%B2%D8%A7%D8%A1-%D9%88%D9%8A%D8%AA%D9%83%D8%A8%D8%AF-%D8%AE%D8%B3%D8%A7%D8%B1%D8%A9-%D9%85%D9%81%D8%A7%D8%AC%D8%A6%D8%A9-%D8%A3%D9%85%D8%A7%D9%85-%D8%A3%D9%88%D8%B1%D9%86%D8%A8%D9%88%D8%B1%D8%BA-%D9%81%D9%8A-%D8%A7%D9%84%D8%AF%D9%88%D8%B1%D9%8A-%D8%A7%D9%84%D8%B1%D9%88%D8%B3%D9%8A/" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>
+                <div class="ad-slot-wrapper">
+                    <ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>
+                </div>
+    </main>
+
+    <footer>
+        <p>Reyada 24 Premium Dashboard &copy; 2026</p>
     </footer>
 </body>
 </html>
