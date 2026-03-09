@@ -1,223 +1,192 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import re
 
-def run_lumina_prime_scraper():
+def run_news():
     rss_url = "https://arabic.rt.com/rss/sport/"
-    matches_url = "https://www.yallakora.com/match-center"
-    
-    # الـ Headers الاحترافية لضمان سحب البيانات بأمان وسرعة
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,video/*;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'ar-IQ,ar;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Referer': 'https://www.google.com/',
-        'Sec-Fetch-Dest': 'image',
-        'Sec-Fetch-Mode': 'no-cors',
-        'Sec-Fetch-Site': 'cross-site',
-        'Connection': 'keep-alive',
-        'DNT': '1',
-        'Sec-Ch-Ua': '"Google Chrome";v="124", "Not:A-Brand";v="8", "Chromium";v="124"',
-        'Sec-Ch-Ua-Mobile': '?0',
-        'Sec-Ch-Ua-Platform': '"Windows"',
-        'Origin': 'https://www.google.com',
-        'Range': 'bytes=0-'
-    }
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'ar-IQ,ar;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.google.com/',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
+    'Upgrade-Insecure-Requests': '1',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'DNT': '1',
+    'Sec-Ch-Ua': '"Google Chrome";v="124", "Not:A-Brand";v="8", "Chromium";v="124"',
+    'Sec-Ch-Ua-Mobile': '?0',
+    'Sec-Ch-Ua-Platform': '"Windows"'
+}
     
     try:
-        # رابط الإعلان الخاص بك
-        my_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
+        # الرابط المباشر الخاص بك
+        my_direct_link = "https://data527.click/21330bf1d025d41336e6/57154ac610/?placementName=default"
         
-        # أكواد الإعلانات
-        ad_ins = '<ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>'
-        ad_script = '<script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>'
-
-        # 1. جلب المباريات (بتنسيق ألترا العائم)
-        match_res = requests.get(matches_url, headers=headers, timeout=15)
-        match_res.encoding = 'utf-8'
-        match_soup = BeautifulSoup(match_res.content, 'lxml')
-        matches_html = ""
-        # جلب أول 8 مباريات لضمان مظهر ضخم
-        for league in match_soup.find_all('div', class_='matchCard')[:6]:
-            for m in league.find_all('div', class_='allMatchesList')[:1]:
-                try:
-                    t1 = m.find('div', class_='teamA').text.strip()
-                    t2 = m.find('div', class_='teamB').text.strip()
-                    res = m.find('div', class_='MResult').find_all('span')
-                    score = f"{res[0].text}-{res[1].text}" if len(res) > 1 else "قادم"
-                    matches_html += f'''
-                    <div class="m-card">
-                        <div class="m-status">مباشر</div>
-                        <div class="m-teams-row">
-                            <span class="m-team">{t1}</span>
-                            <span class="m-score">{score}</span>
-                            <span class="m-team">{t2}</span>
-                        </div>
-                    </div>'''
-                except: continue
-
-        # 2. جلب الأخبار (بتنسيق ألترا السينمائي)
+        # أكواد الإعلانات الإضافية التي زودتني بها
+        ad_ins_code = '<ins style="width: 300px;height:250px" data-width="300" data-height="250" class="g2fb0b4c321" data-domain="//data527.click" data-affquery="/e3435b2a507722939b6f/2fb0b4c321/?placementName=default"><script src="//data527.click/js/responsive.js" async></script></ins>'
+        ad_script_code = '<script type="text/javascript" src="//data527.click/129ba2282fccd3392338/b1a648bd38/?placementName=default"></script>'
+        
         response = requests.get(rss_url, headers=headers, timeout=20)
+        response.encoding = 'utf-8'
+        
         soup = BeautifulSoup(response.content, 'xml')
-        news_grid_html = ""
-        # جلب أول 15 خبر لضمان مظهر ضخم
-        for i, item in enumerate(soup.find_all('item')[:15]):
+        items = soup.find_all('item')
+        
+        ticker_items = " • ".join([item.title.text for item in items[:12]])
+        news_html = ""
+        
+        for i, item in enumerate(items[:20]):
             title = item.title.text
-            img = item.find('enclosure').get('url') if item.find('enclosure') else "https://via.placeholder.com/600x400"
+            news_url = item.link.text
+            img_element = item.find('enclosure')
+            img_url = img_element.get('url') if img_element else "https://via.placeholder.com/800x500/1a1a1a/ffffff?text=NEWS+IMAGE"
             
-            # إدراج الإعلان بذكاء داخل شبكة الأخبار
-            if i == 5:
-                news_grid_html += f'<div class="ad-grid-box">{ad_ins}</div>'
-            
-            news_grid_html += f'''
-            <div class="n-card">
-                <a href="{my_link}" target="_blank">
-                    <div class="n-img-wrapper">
-                        <img src="{img}" alt="news" loading="lazy">
-                        <div class="n-overlay"></div>
-                        <div class="n-badge">عاجل</div>
-                    </div>
-                    <div class="n-content">
-                        <h3>{title}</h3>
-                        <div class="n-footer">
-                            <span><i class="far fa-clock"></i> {datetime.now().strftime('%H:%M')}</span>
-                            <span class="n-btn">المزيد <i class="fas fa-chevron-left"></i></span>
-                        </div>
-                    </div>
-                </a>
-            </div>'''
+            description = item.description.text if item.description else ""
+            clean_desc = re.sub('<[^<]+?>', '', description)[:110] + "..."
 
-        # 3. بناء الواجهة النهائية (LUMINA PRIME ULTRA - Cinematic Edition)
+            news_html += f'''
+            <article class="glass-card">
+                <div class="badge">{"حصري" if i < 3 else "خبر"}</div>
+                <div class="card-image">
+                    <a href="{my_direct_link}" target="_blank">
+                        <img src="{img_url}" loading="lazy" alt="news">
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">{title}</h2>
+                    <p class="card-snippet">{clean_desc}</p>
+                    <div class="meta-data">
+                        <span>🕒 {datetime.now().strftime("%I:%M %p")}</span>
+                        <span class="trending-fire">🔥 عاجل</span>
+                    </div>
+                    <div class="action-area">
+                        <a href="{my_direct_link}" target="_blank" class="btn-prime">التفاصيل الكاملة</a>
+                        <a href="{news_url}" target="_blank" class="btn-outline">المصدر</a>
+                    </div>
+                </div>
+            </article>'''
+
+            if (i + 1) % 4 == 0:
+                news_html += f'''
+                <div class="ad-slot-wrapper">
+                    {ad_ins_code}
+                </div>'''
+
+        now_date = datetime.now().strftime("%Y-%m-%d")
+        
         full_html = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINA PRIME ULTRA | السينمائي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;800&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>رياضة 24 | النسخة المطورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {{ 
-            --gold: #ffcf4b; 
-            --accent: #00f2ff;
-            --dark: #05070a;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+        :root {{
+            --glass-bg: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --primary-accent: #00f2fe;
+            --danger-accent: #ff0844;
+            --text-main: #ffffff;
         }}
-        
-        html {{ scroll-behavior: smooth; }}
-        * {{ box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }}
-        
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{ 
-            background: var(--dark); color: #e0e0e0; font-family: 'Cairo', sans-serif; margin: 0; 
-            background-image: radial-gradient(circle at 50% 50%, #0a111a 0%, #030508 100%);
-            min-height: 100vh; overflow-x: hidden;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background-attachment: fixed;
+            background-size: cover;
+            font-family: 'Cairo', sans-serif; 
+            color: var(--text-main); 
+            padding-top: 150px;
         }}
-
-        /* Header Ultra */
+        
         header {{ 
-            background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(25px); 
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; 
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(25px); 
+            padding: 15px 5%; 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center; 
         }}
-        .logo {{ font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }}
-        .logo span {{ color: var(--gold); text-shadow: 0 0 20px rgba(255,207,75,0.4); }}
-
-        .container {{ max-width: 1400px; margin: 0 auto; padding: 20px; }}
-
-        /* شريط المباريات المتطور */
-        .match-ticker {{ 
-            display: flex; gap: 15px; overflow-x: auto; padding: 10px 0 30px; 
-            scrollbar-width: none;
+        .logo {{ font-size: 26px; font-weight: 900; color: #fff; text-decoration: none; }}
+        .logo span {{ color: var(--danger-accent); text-shadow: 0 0 10px var(--danger-accent); }}
+        
+        .ticker-wrap {{ 
+            position: fixed; top: 85px; width: 100%; 
+            background: rgba(255, 8, 68, 0.85); 
+            backdrop-filter: blur(10px);
+            color: #fff; overflow: hidden; height: 40px; 
+            display: flex; align-items: center; z-index: 999;
         }}
-        .match-ticker::-webkit-scrollbar {{ display: none; }}
-        
-        .m-card {{ 
-            background: var(--card-bg); min-width: 260px; padding: 20px; border-radius: 18px; 
-            border: 1px solid var(--border); position: relative; backdrop-filter: blur(10px);
-        }}
-        .m-card:hover {{ background: rgba(255,255,255,0.07); border-color: var(--accent); }}
-        .m-status {{ font-size: 10px; background: #ff4b4b; color: white; padding: 2px 8px; border-radius: 4px; position: absolute; top: 10px; right: 10px; animation: pulse 2s infinite; }}
-        .m-teams-row {{ display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }}
-        .m-team {{ font-size: 13px; font-weight: 600; flex: 1; text-align: center; color: #aaa; }}
-        .m-score {{ color: var(--accent); font-family: 'Orbitron'; font-weight: 700; font-size: 20px; margin: 0 15px; }}
+        .ticker-title {{ background: #000; padding: 0 20px; font-weight: 900; z-index: 2; height: 100%; display: flex; align-items: center; font-size: 13px; }}
+        .ticker-scroll {{ white-space: nowrap; animation: scroll 60s linear infinite; }}
+        @keyframes scroll {{ 0% {{ transform: translateX(100%); }} 100% {{ transform: translateX(-250%); }} }}
 
-        /* شبكة الأخبار السينمائية الضخمة */
-        .news-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }}
-        .n-card {{ 
-            background: var(--card-bg); border-radius: 22px; overflow: hidden; 
-            border: 1px solid var(--border); height: 100%; position: relative;
+        .container {{ max-width: 1250px; margin: 0 auto 50px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }}
+        
+        .glass-card {{ 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(20px);
+            border-radius: 25px; overflow: hidden; 
+            transition: 0.4s; 
+            border: 1px solid var(--glass-border); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }}
-        .n-card:hover {{ transform: scale(1.03); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }}
-        .n-card a {{ text-decoration: none; color: inherit; }}
+        .glass-card:hover {{ transform: scale(1.03); border-color: var(--primary-accent); }}
         
-        .n-img-wrapper {{ position: relative; height: 260px; overflow: hidden; }}
-        .n-img-wrapper img {{ width: 100%; height: 100%; object-fit: cover; transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }}
-        .n-card:hover .n-img-wrapper img {{ transform: scale(1.1); }}
+        .badge {{ position: absolute; top: 15px; left: 15px; background: var(--danger-accent); color: #fff; padding: 4px 15px; font-size: 11px; font-weight: 700; border-radius: 10px; z-index: 5; }}
+        .card-image {{ height: 210px; overflow: hidden; }}
+        .card-image img {{ width: 100%; height: 100%; object-fit: cover; }}
         
-        .n-overlay {{ position: absolute; inset: 0; background: linear-gradient(to top, var(--dark) 10%, transparent 60%); }}
-        .n-badge {{ position: absolute; top: 15px; left: 15px; background: var(--gold); color: #000; font-size: 11px; font-weight: 800; padding: 4px 15px; border-radius: 6px; }}
+        .card-content {{ padding: 25px; }}
+        .card-title {{ font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 12px; line-height: 1.5; }}
+        .card-snippet {{ font-size: 13px; color: #ccc; margin-bottom: 20px; }}
         
-        .n-content {{ padding: 25px; margin-top: -60px; position: relative; z-index: 2; }}
-        .n-content h3 {{ font-size: 18px; margin: 0 0 15px; line-height: 1.6; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }}
-        .n-meta {{ display: flex; justify-content: space-between; align-items: center; color: #888; font-size: 12px; }}
-        .n-btn {{ color: var(--gold); font-weight: 800; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 10px; font-size: 13px; }}
-
-        /* الإعلانات بتنسيق ألترا */
-        .ad-slot-ultra {{ display: flex; justify-content: center; align-items: center; margin: 50px 0; border: 1px dashed var(--border); padding: 20px; border-radius: 20px; }}
-        .ad-grid-box {{ grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; }}
-
-        @keyframes pulse {{ 0% {{ opacity: 1; }} 50% {{ opacity: 0.5; }} 100% {{ opacity: 1; }} }}
+        .meta-data {{ display: flex; justify-content: space-between; font-size: 11px; color: var(--primary-accent); margin-bottom: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px; }}
         
-        @media (max-width: 768px) {{
-            .news-grid {{ grid-template-columns: 1fr; }}
-            .container {{ padding: 15px; }}
-            .logo {{ font-size: 20px; }}
-        }}
+        .action-area {{ display: flex; gap: 10px; }}
+        .btn-prime {{ flex: 2; background: linear-gradient(90deg, #ff0844, #ffb199); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-weight: 700; }}
+        .btn-outline {{ flex: 1; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; text-align: center; padding: 12px; border-radius: 12px; font-size: 12px; border: 1px solid var(--glass-border); }}
+        
+        .ad-slot-wrapper {{ grid-column: 1 / -1; display: flex; justify-content: center; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px dashed var(--glass-border); }}
+        
+        footer {{ text-align: center; padding: 40px; color: rgba(255,255,255,0.4); font-size: 12px; border-top: 1px solid var(--glass-border); }}
+        
+        @media (max-width: 600px) {{ .container {{ grid-template-columns: 1fr; }} }}
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">LUMINA<span>PRIME</span></a>
-        <div style="font-size: 11px; border: 1px solid var(--accent); padding: 5px 15px; border-radius: 50px; color: var(--accent); font-weight: 600;">ULTRA CONNECT</div>
+    {ad_script_code} <header>
+        <a href="#" class="logo">رياضة <span>24</span></a>
+        <div style="font-size: 12px; letter-spacing: 1px;">📅 {now_date}</div>
     </header>
 
-    <div class="container">
-        <div class="match-ticker">
-            {matches_html}
-        </div>
-
-        <div class="ad-slot-ultra">
-            {ad_ins}
-        </div>
-
-        <h2 style="font-size: 28px; font-weight: 800; margin: 50px 0 30px; display: flex; align-items: center; gap: 15px; border-right: 5px solid var(--gold); padding-right: 15px;">
-            <i class="fas fa-bolt" style="color:var(--gold)"></i> آخر الأخبار
-        </h2>
-        
-        <div class="news-grid">
-            {news_grid_html}
-        </div>
-
-        <div class="ad-slot-ultra" style="border:none;">
-            {ad_script}
-        </div>
+    <div class="ticker-wrap">
+        <div class="ticker-title">أهم الأنباء</div>
+        <div class="ticker-scroll">{ticker_items}</div>
     </div>
 
-    <footer style="text-align: center; padding: 80px 20px; background: rgba(0,0,0,0.4); border-top: 1px solid var(--border); margin-top: 80px;">
-        <div class="logo">LUMINA<span>PRIME</span></div>
-        <p style="opacity: 0.4; margin-top: 20px; font-size: 14px;">تجربة مستخدم "ألترا" فائقة الفخامة © 2026</p>
+    <main class="container">
+        {news_html}
+    </main>
+
+    <footer>
+        <p>Reyada 24 Premium Dashboard &copy; 2026</p>
     </footer>
 </body>
 </html>'''
 
         with open("index.html", "w", encoding="utf-8") as f:
             f.write(full_html)
-        print("✅ Done: The Ultra Cinematic Version is ready! Open index.html.")
-        
+        print("Done! High-end Transparent Site (Reyada 24) generated.")
+            
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
-    run_lumina_prime_scraper()
+    run_news()
